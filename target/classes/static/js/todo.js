@@ -39,23 +39,3 @@ function closePanel()
     contentWrapper.classList.remove("pure-u-md-18-24");
     contentWrapper.classList.remove("pure-u-xl-20-24");
 }
-
-function validateLogInForm()
-{
-    var email = document.getElementById("email-login").value;
-    var password = document.getElementById("password-login").value;
-    
-    if (!email.length)
-    {
-        alert("Email is empty!");
-        return false;
-    }
-
-    if (!password.length)
-    {
-        alert("Password is empty!");
-        return false;
-    }
-
-    return true;
-}

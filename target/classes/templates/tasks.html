@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Day</title>
+    <title>To Do</title>
     <th:block th:include="head.html"></th:block>
 </head>
 <body>
@@ -10,8 +10,7 @@
     <th:block th:include="header.html"></th:block>
     <div class="pure-u-1-1" id="content-block">
         <div class="content-block-header">
-            <h1>My Day</h1>
-            <h3 id="cur-date">Saturday, 3 October</h3>
+            <h1><span class="material-icons">home</span>Tasks</h1>
         </div>
         <hr>
         <input type="text" id="content-block-add" class="pure-u-1-1" onchange="handleInputTask(this, this.value)" placeholder="Add task">
@@ -19,14 +18,14 @@
             <th:block th:each="task: ${tasks}">
                 <div class="content-block-list-item pure-u-1-1" style="vertical-align: middle;">
                     <div class="pure-u-2-24 pure-u-md-1-24">
-                        <input type="checkbox" th:checked="${task.isDone}" class="checkbox-is-done" th:onclick="redirect('/myday/switchIsDoneTaskFlag?task_id=[[${task.id}]]')">
+                        <input type="checkbox" th:checked="${task.isDone}" class="checkbox-is-done" th:onclick="redirect('/tasks/switchIsDoneTaskFlag?task_id=[[${task.id}]]')">
                     </div>
                     <div class="pure-u-18-24 pure-u-md-21-24">
                         <span th:style="${task.isDone} ? 'text-decoration: line-through' : 'text-decoration: none'" th:text="${task.description}"></span>
                     </div>
                     <div class="pure-u-3-24 pure-u-md-2-24" style="float: right;">
-                        <span class="material-icons" th:classappend="${task.important} ? favorite-icon-checked : favorite-icon-unchecked" th:onclick="redirect('/myday/switchImportantFlag?task_id=[[${task.id}]]')" th:text="${task.important} ? 'star' : 'star_border'"></span>
-                        <span class="material-icons delete-task-icon" th:onclick="redirect('/myday/deleteTask?task_id=[[${task.id}]]')">delete_outline</span>
+                        <span class="material-icons" th:classappend="${task.important} ? favorite-icon-checked : favorite-icon-unchecked" th:onclick="redirect('/tasks/switchImportantFlag?task_id=[[${task.id}]]')" th:text="${task.important} ? 'star' : 'star_border'"></span>
+                        <span class="material-icons delete-task-icon" th:onclick="redirect('/tasks/deleteTask?task_id=[[${task.id}]]')">delete_outline</span>
                     </div>
                 </div>
             </th:block>
@@ -40,12 +39,12 @@
             if (taskDescription.length)
             {
                 var request = new XMLHttpRequest();
-                request.open('POST', '/myday/add', false);
+                request.open('POST', '/tasks/add', false);
                 request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
                 var requestData = "task_description=" + taskDescription;
                 request.send(requestData);
 
-                redirect("/myday/show");
+                redirect("/tasks/show");
             }
         }
 
@@ -54,8 +53,6 @@
             window.location.href = url;
         }
 
-        var options = { weekday: 'long', day: 'numeric', month: 'long'};
-        document.getElementById("cur-date").innerHTML = new Intl.DateTimeFormat('en-US', options).format(new Date());
-        document.getElementById("menu-list-myday").classList.add("selected");
+        document.getElementById("menu-list-tasks").classList.add("selected");
     </script>
 </html>
